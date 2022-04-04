@@ -29,7 +29,7 @@ def majority_baseline(train_sentences, train_labels, testinput, testlabels):
 
 
 if __name__ == '__main__':
-    train_path = "data/preprocessed/train"
+    train_path = "data/preprocessed/train/"
     dev_path = "data/preprocessed/dev"
     test_path = "data/preprocessed/test"
 
