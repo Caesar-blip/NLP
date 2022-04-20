@@ -39,20 +39,20 @@ the	N	N
 house	N	N
 .	N	N
 ----------
-Here	N	N
+Here	N	C
 ,	N	N
 police	N	N
 say	N	N
 ,	N	N
 they	N	N
 were	N	N
-met	N	C
+met	N	N
 by	N	N
 gunfire	C	C
 and	N	N
 a	N	N
 standoff	C	N
-ensued	C	N
+ensued	C	C
 .	N	N
 ----------
 Prison	C	N
@@ -60,7 +60,7 @@ authorities	C	C
 said	N	N
 that	N	N
 some	N	N
-victims	C	C
+victims	C	N
 were	N	N
 decapitated	C	C
 .	N	N
@@ -72,14 +72,14 @@ a	N	N
 lengthy	C	C
 history	N	N
 of	N	N
-violent	C	N
+violent	C	C
 behavior	C	C
 that	N	N
 landed	C	C
 him	N	N
 in	N	N
-prison	C	N
-multiple	C	C
+prison	C	C
+multiple	C	N
 times	N	N
 .	N	N
 ----------
@@ -108,7 +108,7 @@ Brazil	N	N
 ,	N	N
 dozens	C	N
 of	N	N
-inmates	C	C
+inmates	C	N
 ,	N	N
 mostly	N	N
 rival	C	C
@@ -125,7 +125,7 @@ of	N	N
 Alcaçuz	C	N
 ,	N	N
 a	N	N
-state	N	C
+state	N	N
 prison	N	C
 located	N	N
 in	N	N
@@ -141,11 +141,11 @@ state	N	N
 Rio	N	N
 Grande	N	C
 do	N	N
-Norte	C	N
+Norte	C	C
 .	N	N
 ----------
 After	N	N
-upwards	C	C
+upwards	C	N
 of	N	N
 an	N	N
 hour	N	N
@@ -173,7 +173,7 @@ Manning	N	N
 ,	N	N
 who	N	N
 in	N	N
-2010	N	N
+2010	N	C
 released	C	C
 thousands	C	N
 of	N	N
@@ -183,15 +183,15 @@ to	N	N
 the	N	N
 public	N	N
 through	N	N
-WikiLeaks	C	C
-detailing	C	N
+WikiLeaks	C	N
+detailing	C	C
 abuses	C	N
 of	N	N
 the	N	N
 Iraq	N	N
 and	N	N
 Afghanistan	C	N
-wars	N	C
+wars	N	N
 ,	N	N
 has	N	N
 already	N	N
@@ -222,16 +222,16 @@ the	N	N
 dead	N	N
 include	N	N
 five	N	N
-suicide	C	N
+suicide	C	C
 bombers	C	N
 .	N	N
 ----------
-Eight	N	C
+Eight	N	N
 people	N	N
 found	N	N
 slain	C	N
 inside	N	N
-Houston-area	N	N
+Houston-area	N	C
 home	N	N
 Saturday	N	N
 night	N	N
@@ -240,7 +240,7 @@ police	N	N
 in	N	N
 Houston	N	N
 ,	N	N
-Texas	N	C
+Texas	N	N
 ,	N	N
 United	N	N
 States	N	N
@@ -278,7 +278,7 @@ Rights	N	N
 Watch	N	N
 of	N	N
 not	N	N
-taking	N	C
+taking	N	N
 adequate	C	N
 measures	N	N
 to	N	N
@@ -286,7 +286,7 @@ protect	N	N
 the	N	N
 nation	N	N
 's	N	N
-citizens	C	C
+citizens	C	N
 .	N	N
 ----------
 Around	N	N
@@ -310,7 +310,7 @@ home	N	N
 on	N	N
 a	N	N
 welfare	C	C
-check	C	C
+check	C	N
 .	N	N
 ----------
 Obama	N	N
@@ -329,7 +329,7 @@ in	N	N
 days	N	N
 Yesterday	N	N
 ,	N	N
-mere	C	C
+mere	C	N
 days	N	N
 before	N	N
 he	N	N
@@ -342,7 +342,7 @@ U.S.	N	N
 President	N	N
 Barack	N	N
 Obama	N	N
-commuted	C	C
+commuted	C	N
 the	N	N
 sentence	C	N
 of	N	N
@@ -350,7 +350,7 @@ Army	N	N
 intelligence	C	C
 officer	N	C
 Chelsea	N	N
-Manning	N	N
+Manning	N	C
 from	N	N
 35	N	N
 years	N	N
@@ -396,7 +396,7 @@ the	N	N
 HSCO	C	N
 and	N	N
 subsequently	C	C
-charged	N	N
+charged	N	C
 with	N	N
 the	N	N
 crimes	N	C
@@ -406,7 +406,7 @@ Al-Qaeda	N	N
 in	N	N
 the	N	N
 Islamic	N	C
-Maghreb	C	C
+Maghreb	C	N
 claimed	C	C
 a	N	N
 single	N	N
@@ -414,7 +414,7 @@ bomber	N	N
 from	N	N
 affiliate	C	C
 group	N	N
-al-Mourabitoun	C	C
+al-Mourabitoun	C	N
 conducted	C	C
 the	N	N
 attack	N	N
@@ -440,7 +440,7 @@ contract	C	C
 extension	C	C
 until	N	N
 June	N	N
-2021	N	N
+2021	N	C
 and	N	N
 French	N	N
 winger	C	N
@@ -449,7 +449,7 @@ Ribéry	C	N
 signed	N	N
 a	N	N
 one-year	N	C
-contract	N	C
+contract	N	N
 extension	C	C
 with	N	N
 the	N	N

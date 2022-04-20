@@ -168,6 +168,7 @@ if __name__ == '__main__':
     # Set the random seed for reproducible experiments
     torch.manual_seed(230)
     if params.cuda:
+        print("cuda found")
         torch.cuda.manual_seed(230)
 
     # Set the logger
