@@ -83,7 +83,7 @@ def main():
     print("PART C. Modeling the task")
 
     args = parser.parse_args()
-    if len(args.model_dir) == 1:
+    if  args.model_dir == 'experiments/base_model':
         print("\nQuestion 10. Baselines")
     else:
         print("\nQuestion 14: Hyperparameter changing")
