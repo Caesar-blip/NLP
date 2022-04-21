@@ -17,3 +17,8 @@ Make sure to install the libraries in requirements.txt.
 - For part C of the assignment, you need to build the vocabulary and train the model. Inspect the code to understand what is happening. Implement functions to evaluate the output of the model and the baselines in TODO_detailed_evaluation.py.
 
 Your code will not be graded but it should be well documented and support the results of your submission. Your submission is only complete with the code. We will sporadically check the completeness and quality of the code.
+
+Running The Code:
+1. Run train.py with the specified models as model_dir
+2. Evaluate the output by running evaluate.py with model_dir
+3. Run a detailed analyses by running TODO_detailed_evaluation.py with all models split by a whitespace in a single string as model_dir
