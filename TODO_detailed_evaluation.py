@@ -72,23 +72,39 @@ def analyze_model(directory):
     average="weighted"
     f1 = f1_score(data['gold'], data['predict'], pos_label=target,average=average)
     print(f1)
-    header_names = ['word', 'gold', 'predict']
-    data = pd.read_csv('experiments/base_model/model_output.tsv', encoding = 'latin-1', sep='\t', header = 0, names = header_names)
-    data = data.dropna()
-
+    return(f1)
 
 def main():
     print("Intro to NLP 2022: Assigment 1")
     print("Nils Breeman, Sebastiaan Bye, Julius Wantenaar\n")
     print("PART C. Modeling the task")
 
-    args = parser.parse_args()
-    if  args.model_dir == 'experiments/base_model':
-        print("\nQuestion 10. Baselines")
-    else:
-        print("\nQuestion 14: Hyperparameter changing")
-    directories = args.model_dir.split(" ")
-    for directory in directories:
-        analyze_model(directory)
+#    args = parser.parse_args()
+#    if  args.model_dir == 'experiments/base_model':
+#        print("\nQuestion 10. Baselines")
+#    else:
+#        print("\nQuestion 14: Hyperparameter changing")
+#    directories = args.model_dir.split(" ")
+#    for directory in directories:
+#        analyze_model(directory)
     
+    args = parser.parse_args()
+    scores = []
+    scores.append(analyze_model('experiments/base_model'))
+    scores.append(analyze_model('experiments/hl_exp/hl20/'))
+    scores.append(analyze_model('experiments/hl_exp/hl80/'))
+    scores.append(analyze_model('experiments/hl_exp/hl150'))
+
+    nodes = [20, 50, 80, 150]
+    
+    plt.plot(nodes, scores)
+    plt.title("F1 as a function of nodes in the hidden layer")
+    plt.xlabel("Amount of nodes")
+    plt.ylabel("F1 scores")
+    plt.show()
+
+
+
+
+
 main()
