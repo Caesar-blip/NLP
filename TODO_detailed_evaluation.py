@@ -12,6 +12,14 @@ import scipy
 from scipy import stats
 from baselines import Baseliner
 import matplotlib.pyplot as plt
+import argparse
+import os
+
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--data_dir', default='data/preprocessed', help="Directory containing the dataset")
+parser.add_argument('--model_dir', default='experiments/base_model', help="Directory containing params.json")
+
 
 def binarize(labels):
     output = []
@@ -37,24 +45,16 @@ def get_precision(predicts, labels, target):
         return 0
     return right/(wrong+right)
 
-
-
-def main():
-    print("Intro to NLP 2022: Assigment 1")
-    print("Nils Breeman, Sebastiaan Bye, Julius Wantenaar\n")
-
-    print("PART C. Modeling the task")
-    print("\nQuestion 10. Baselines")
-
+def analyze_model(directory):
     header_names = ['word', 'gold', 'predict']
-    data = pd.read_csv('experiments/base_model/model_output.tsv', encoding = 'latin-1', sep='\t', header = 0, names = header_names)
+    data = pd.read_csv(os.path.join(directory, "model_output.tsv"), encoding = 'latin-1', sep='\t', header = 0, names = header_names)
     data = data.dropna()
-    
-    
+    print(f"model: {directory}")
+
     #binarize
     data['gold'] = binarize(list(data['gold']))
     data['predict'] = binarize(list(data['predict']))
-    
+
     target=0
     print("Class N")
     print(f"Precision: {precision_score(data['gold'], data['predict'], pos_label=target)}")
@@ -62,7 +62,7 @@ def main():
     print(f"F1: {f1_score(data['gold'], data['predict'], pos_label=target)}")
     average="weighted"
     print(f1_score(data['gold'], data['predict'], pos_label=target,average=average))
-    
+
     print()
     print("Class C")
     target = 1
@@ -72,6 +72,23 @@ def main():
     average="weighted"
     f1 = f1_score(data['gold'], data['predict'], pos_label=target,average=average)
     print(f1)
-    
+    header_names = ['word', 'gold', 'predict']
+    data = pd.read_csv('experiments/base_model/model_output.tsv', encoding = 'latin-1', sep='\t', header = 0, names = header_names)
+    data = data.dropna()
+
+
+def main():
+    print("Intro to NLP 2022: Assigment 1")
+    print("Nils Breeman, Sebastiaan Bye, Julius Wantenaar\n")
+    print("PART C. Modeling the task")
+
+    args = parser.parse_args()
+    if len(args.model_dir) == 1:
+        print("\nQuestion 10. Baselines")
+    else:
+        print("\nQuestion 14: Hyperparameter changing")
+    directories = args.model_dir.split(" ")
+    for directory in directories:
+        analyze_model(directory)
     
 main()
