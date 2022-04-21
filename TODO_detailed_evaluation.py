@@ -90,9 +90,14 @@ def main():
     
     args = parser.parse_args()
     scores = []
+    print("Question 10.")
     scores.append(analyze_model('experiments/base_model'))
+    print("\nQuestion 14.")
+    print("\n20 hidden nodes")
     scores.append(analyze_model('experiments/hl_exp/hl20/'))
+    print("\n80 hidden nodes")
     scores.append(analyze_model('experiments/hl_exp/hl80/'))
+    print("\n150 hidden nodes")
     scores.append(analyze_model('experiments/hl_exp/hl150'))
 
     nodes = [20, 50, 80, 150]
