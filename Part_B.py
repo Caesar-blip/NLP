@@ -10,17 +10,91 @@ from scipy import stats
 from baselines import Baseliner
 import matplotlib.pyplot as plt
 
+from sklearn.metrics import f1_score
+from sklearn.metrics import recall_score
+from sklearn.metrics import precision_score
+
+def get_precision(predicts, labels, target):
+    right = 0
+    wrong = 0
+    i=0
+    for predict in labels:
+        if predict == target:
+            if predict == predicts[i]:
+                right +=1
+            else:
+                wrong +=1
+        i+=1
+    if (right+wrong) == 0:
+        return 0
+    return right/(wrong+right)
+
+def get_recall(predicts, labels, target):
+    right=0
+    wrong=0
+    i=0
+    for predict in predicts:
+        if predict == target:
+            if predict == labels[i]:
+                right+=1
+            else:
+                wrong+=1
+        i+=1
+    if (right+wrong) == 0:
+        return 0
+    return right/(wrong+right)
+
+def get_f1(predicts, labels, target):
+    recall = get_recall(predicts, labels, target)
+    precision = get_precision(predicts, labels, target)
+    if (precision+recall) == 0:
+        return 0
+    return 2*(precision*recall)/(precision+recall)
+
+def binarize(labels):
+    output = []
+    for label in labels:
+        if label == "N":
+            output.append(0)
+        elif label == "C":
+            output.append(1)
+    return output
+
+def binarize_labels(labels):
+    output = []
+    for sent in labels:
+        for label in sent:
+            if label == "C":
+                output.append(1)
+            elif label == "N":
+                output.append(0)
+    return output
+
+def sk_f1(gold, predict, pos_label=1, average="binary"):
+    gold = binarize_labels(gold)
+    predict = binarize_labels(predict)
+    return f1_score(gold, predict, pos_label=pos_label,average=average)
+
+def sk_precision(gold, predict, pos_label=1, average="binary"):
+    gold = binarize_labels(gold)
+    predict = binarize_labels(predict)
+    return precision_score(gold, predict, pos_label=pos_label,average=average)
+
+def sk_recall(gold, predict, pos_label=1, average="binary"):
+    gold = binarize_labels(gold)
+    predict = binarize_labels(predict)
+    return recall_score(gold, predict, pos_label=pos_label,average=average)
+
 def main():
     print("Intro to NLP 2022: Assigment 1")
     print("Nils Breeman, Sebastiaan Bye, Julius Wantenaar\n")
 
     print("PART B. Understanding the task of ...")
 
-#    print("\nQuesiton 7. Basic Statistics")
+    print("\nQuesiton 7. Basic Statistics")
 
     nlp = spacy.load("en_core_web_sm")
-    header_names = ['HIT ID', 'Sentence', 'Start word', 'End word', 'Target word', 'Native', 'Non-native', 'Difficult native',
-             'Difficult non', 'Binary', 'Prob']
+    header_names = ['HIT ID', 'Sentence', 'Start word', 'End word', 'Target word', 'Native', 'Non-native', 'Difficult native', 'Difficult non', 'Binary', 'Prob']
     tsv_data = pd.read_csv('data/original/english/WikiNews_Train.tsv', sep='\t', header = 0, names = header_names)
     data = tsv_data[['Target word','Binary','Prob']]
     print(data['Binary'].value_counts())
@@ -117,7 +191,7 @@ def main():
     for i in range(runs):
         maj_dev_ans[i] = analyzer.majority_baseline()[0]
     print(f"Accuracy on dev {np.mean(maj_dev_ans)}, Accuracy on test {np.mean(maj_test_ans)}")
-
+    
     # Random
     print("\nRandom Baseline")
     analyzer.set_mode("test")
@@ -193,9 +267,106 @@ def main():
     plt.ylabel("Accurarcy")
     plt.show()
 
+    print(f"Precision, Accurarcy and F1")
+    analyzer = Baseliner()
+    analyzer.set_mode("test")
+    
+    print("\n Results Majority Baseline")
+    results = analyzer.majority_baseline()
+    target = 1
+    
+    print("Class C")
+    print(f'Precision: {sk_precision(results[1], analyzer.testlabels,pos_label=target, average="binary")}')
+    print(f'{get_precision(binarize_labels(results[1]), binarize_labels(analyzer.testlabels), target)}')
+    print(f'Recall: {sk_recall(results[1], analyzer.testlabels,pos_label=target, average="binary")}')
+    print(f'{get_recall(binarize_labels(results[1]), binarize_labels(analyzer.testlabels), target)}')
+    print(f'F1 {sk_f1(results[1], analyzer.testlabels,pos_label=target, average="binary")}')
+    print(f'{get_f1(binarize_labels(results[1]), binarize_labels(analyzer.testlabels), target)}')
+    
+    target = 0
+    print("\nClass N")
+    print(f'Precision: {sk_precision(results[1], analyzer.testlabels,pos_label=target, average="binary")}')
+    print(f'{get_precision(binarize_labels(results[1]), binarize_labels(analyzer.testlabels), target)}')
+    print(f'Recall: {sk_recall(results[1], analyzer.testlabels,pos_label=target, average="binary")}')
+    print(f'{get_recall(binarize_labels(results[1]), binarize_labels(analyzer.testlabels), target)}')
+    print(f'F1 {sk_f1(results[1], analyzer.testlabels,pos_label=target, average="binary")}')
+    print(f'{get_f1(binarize_labels(results[1]), binarize_labels(analyzer.testlabels), target)}')
+    
+    print(f'\nWeighted:{sk_f1(results[1], analyzer.testlabels,pos_label=target, average="weighted")}')
+
+    print("\n\n Results Random Baseline")
+    results = analyzer.random_baseline()
+    target = 1
+
+    print("Class C")
+    print(f'Precision: {sk_precision(results[1], analyzer.testlabels,pos_label=target, average="binary")}')
+    print(f'{get_precision(binarize_labels(results[1]), binarize_labels(analyzer.testlabels), target)}')
+    print(f'Recall: {sk_recall(results[1], analyzer.testlabels,pos_label=target, average="binary")}')
+    print(f'{get_recall(binarize_labels(results[1]), binarize_labels(analyzer.testlabels), target)}')
+    print(f'F1 {sk_f1(results[1], analyzer.testlabels,pos_label=target, average="binary")}')
+    print(f'{get_f1(binarize_labels(results[1]), binarize_labels(analyzer.testlabels), target)}')
+
+    target = 0
+    print("\nClass N")
+    print(f'Precision: {sk_precision(results[1], analyzer.testlabels,pos_label=target, average="binary")}')
+    print(f'{get_precision(binarize_labels(results[1]), binarize_labels(analyzer.testlabels), target)}')
+    print(f'Recall: {sk_recall(results[1], analyzer.testlabels,pos_label=target, average="binary")}')
+    print(f'{get_recall(binarize_labels(results[1]), binarize_labels(analyzer.testlabels), target)}')
+    print(f'F1 {sk_f1(results[1], analyzer.testlabels,pos_label=target, average="binary")}')
+    print(f'{get_f1(binarize_labels(results[1]), binarize_labels(analyzer.testlabels), target)}')
+
+    print(f'\nWeighted:{sk_f1(results[1], analyzer.testlabels,pos_label=target, average="weighted")}')
+
+    print("\n\n Length baseline")
+    analyzer.threshold=7
+    results = analyzer.length_baseline()
+    target = 1
+
+    target = 1
+
+    print("Class C")
+    print(f'Precision: {sk_precision(results[1], analyzer.testlabels,pos_label=target, average="binary")}')
+    print(f'{get_precision(binarize_labels(results[1]), binarize_labels(analyzer.testlabels), target)}')
+    print(f'Recall: {sk_recall(results[1], analyzer.testlabels,pos_label=target, average="binary")}')
+    print(f'{get_recall(binarize_labels(results[1]), binarize_labels(analyzer.testlabels), target)}')
+    print(f'F1 {sk_f1(results[1], analyzer.testlabels,pos_label=target, average="binary")}')
+    print(f'{get_f1(binarize_labels(results[1]), binarize_labels(analyzer.testlabels), target)}')
+
+    target = 0
+    print("\nClass N")
+    print(f'Precision: {sk_precision(results[1], analyzer.testlabels,pos_label=target, average="binary")}')
+    print(f'{get_precision(binarize_labels(results[1]), binarize_labels(analyzer.testlabels), target)}')
+    print(f'Recall: {sk_recall(results[1], analyzer.testlabels,pos_label=target, average="binary")}')
+    print(f'{get_recall(binarize_labels(results[1]), binarize_labels(analyzer.testlabels), target)}')
+    print(f'F1 {sk_f1(results[1], analyzer.testlabels,pos_label=target, average="binary")}')
+    print(f'{get_f1(binarize_labels(results[1]), binarize_labels(analyzer.testlabels), target)}')
+
+    print(f'\nWeighted:{sk_f1(results[1], analyzer.testlabels,pos_label=target, average="weighted")}')
 
 
+    print("\n\n Results Frequency Baseline")
+    analyzer.threshold=10e-6
+    results = analyzer.frequency_baseline()
 
+    target = 1
+    print("Class C")
+    print(f'Precision: {sk_precision(results[1], analyzer.testlabels,pos_label=target, average="binary")}')
+    print(f'{get_precision(binarize_labels(results[1]), binarize_labels(analyzer.testlabels), target)}')
+    print(f'Recall: {sk_recall(results[1], analyzer.testlabels,pos_label=target, average="binary")}')
+    print(f'{get_recall(binarize_labels(results[1]), binarize_labels(analyzer.testlabels), target)}')
+    print(f'F1 {sk_f1(results[1], analyzer.testlabels,pos_label=target, average="binary")}')
+    print(f'{get_f1(binarize_labels(results[1]), binarize_labels(analyzer.testlabels), target)}')
+
+    target = 0
+    print("\nClass N")
+    print(f'Precision: {sk_precision(results[1], analyzer.testlabels,pos_label=target, average="binary")}')
+    print(f'{get_precision(binarize_labels(results[1]), binarize_labels(analyzer.testlabels), target)}')
+    print(f'Recall: {sk_recall(results[1], analyzer.testlabels,pos_label=target, average="binary")}')
+    print(f'{get_recall(binarize_labels(results[1]), binarize_labels(analyzer.testlabels), target)}')
+    print(f'F1 {sk_f1(results[1], analyzer.testlabels,pos_label=target, average="binary")}')
+    print(f'{get_f1(binarize_labels(results[1]), binarize_labels(analyzer.testlabels), target)}')
+
+    print(f'\nWeighted:{sk_f1(results[1], analyzer.testlabels,pos_label=target, average="weighted")}')
 
 
 main()
