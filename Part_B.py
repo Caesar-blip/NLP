@@ -111,7 +111,7 @@ def main():
     print(f'Number of instances with more than one token: {more_than_one_token}')
     print(f'Max number of tokens per instance: {max_tokens}')
 
-   print()
+    print()
     print("\nQuestion 8. Explore linguistic characeteristics")
     temp_data = tsv_data.loc[(tsv_data["Difficult native"] >= 1) | (tsv_data["Difficult non"] >= 1)]
     clean = temp_data
