@@ -94,9 +94,9 @@ def main():
     scores.append(analyze_model('experiments/base_model'))
     print("\nQuestion 14.")
     print("\n20 hidden nodes")
-    scores.append(analyze_model('experiments/hl_exp/hl20/'))
+    scores.append(analyze_model('experiments/hl_exp/hl20'))
     print("\n80 hidden nodes")
-    scores.append(analyze_model('experiments/hl_exp/hl80/'))
+    scores.append(analyze_model('experiments/hl_exp/hl80'))
     print("\n150 hidden nodes")
     scores.append(analyze_model('experiments/hl_exp/hl150'))
 

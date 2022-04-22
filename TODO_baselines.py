@@ -10,6 +10,7 @@ from scipy import stats
 from baselines import Baseliner
 import matplotlib.pyplot as plt
 
+
 def main():
     print("Intro to NLP 2022: Assigment 1")
     print("Nils Breeman, Sebastiaan Bye, Julius Wantenaar\n")
